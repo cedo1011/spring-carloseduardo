@@ -1,8 +1,11 @@
 package carloseduardo.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,5 +33,12 @@ public class AlunosController {
         aluno.setNome(nome);
         aluno.setIdade(idade);
         return "redirect:/alunos/list";
+    }
+
+     @RequestMapping("update/{id}")
+    public String update(Model model, @PathVariable int id) {
+        Optional<Aluno> aluno = alunosRepo.findById(id);
+        model.addAttribute("aluno", aluno.get());
+        return "update";
     }
 }
